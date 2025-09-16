@@ -45,7 +45,7 @@ It uses machine learning techniques (Logistic Regression, Random Forest, XGBoost
 
 ## Key Findings
 
-- Models demonstrate **good ranking ability** with **ROC-AUC ≈ 0.82–0.83** (for example, Logistic Regression ROC-AUC ≈ **0.8287** in the notebook).  
+- Models demonstrate **good ranking ability** with **ROC-AUC ≈ 0.82–0.83** using Logistic Regression ROC-AUC ≈ **0.8287**.  
 - **Test-set accuracy** is around **76.9%**, but **precision is very low (~4.9%)** while **recall is relatively high (~76.3%)**, producing a **low F1 score (~9.1%)**.  
   → The model captures most true claims (high recall) but produces many false positives (very low precision).  
 - **Resampling methods (ROS, SMOTE)** produced **very similar test-set metrics**.  
@@ -63,6 +63,4 @@ It uses machine learning techniques (Logistic Regression, Random Forest, XGBoost
 - Deploy model as a **dashboard or API** for business use.
 
 ---
-
-## Repository Structure
 
