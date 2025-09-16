@@ -1,72 +1,68 @@
-# Travel Insurance Claim Prediction - Capstone Project
+# Travel Insurance Claim Prediction
 
-This repository contains my **Data Science Capstone Project** on predicting whether a customer will make a claim on their travel insurance. The project follows a structured machine learning workflow and includes data exploration, preprocessing, modeling, and evaluation.
-
----
-
-## Project Overview
-The goal of this project is to build a **classification model** that can predict travel insurance claims. The dataset is highly imbalanced, with only ~1.5% of the samples belonging to the positive class (claim).  
-
-Main objectives:
-- Explore and clean the data.
-- Handle class imbalance.
-- Train and evaluate multiple ML models.
-- Optimize the top-performing models through hyperparameter tuning.
-- Provide insights and recommendations.
+This project is part of a capstone focusing on predicting whether a travel insurance policy will result in a claim.  
+It uses machine learning techniques (Logistic Regression, Random Forest, XGBoost, etc.) and resampling strategies to handle class imbalance.
 
 ---
 
-## Workflow
+## Project Workflow
 
-1. **Exploratory Data Analysis (EDA)**  
-   - Checked missing values, distributions, and correlations.  
-   - Visualized claim distribution (imbalanced).  
+1. **Business Understanding**  
+   - Travel insurance companies face challenges with **low claim rates** and **imbalanced datasets**.  
+   - The goal is to **predict potential claims**, reduce financial risk, and improve decision-making.  
 
-2. **Data Preprocessing**  
-   - Encoded categorical variables.  
-   - Standardized numerical features.  
-   - Split into train-test sets with stratification.  
+2. **Data Understanding & EDA**  
+   - Dataset contains **44,328 rows** and multiple customer/travel attributes.  
+   - Checked distributions, correlations, and potential outliers.  
+   - No missing values in numeric and categorical features.  
+   - Observed significant **class imbalance**: only a small portion of policies had claims.
 
-3. **Modeling**  
-   Trained 5 baseline models:  
-   - Logistic Regression  
-   - Random Forest  
-   - XGBoost  
-   - Support Vector Machine  
-   - K-Nearest Neighbors  
+3. **Data Cleaning**  
+   - Removed redundant/unnecessary columns.  
+   - Verified no duplicates.  
+   - Encoded categorical variables appropriately.
 
-4. **Handling Class Imbalance**  
-   - Applied **SMOTE** to oversample the minority class.  
+4. **Feature Engineering**  
+   - Grouped rare categories (e.g., marital status).  
+   - Scaled/normalized numeric features.  
+   - Created balanced datasets using **Random Oversampling (ROS)** and **SMOTE** for model comparison.
 
-5. **Evaluation Metrics**  
-   Since recall is most important (catch as many claim cases as possible), we focused on:  
-   - Precision  
-   - Recall  
-   - F1-Score  
-   - ROC-AUC  
+5. **Modeling**  
+   - Tested algorithms:  
+     - Logistic Regression  
+     - Random Forest  
+     - XGBoost  
+     - K-Nearest Neighbors  
+     - Decision Tree  
+   - Used **cross-validation** for performance consistency.  
+   - Evaluated with metrics: **Accuracy, Precision, Recall, F1, ROC-AUC**.
 
-6. **Model Selection**  
-   - Logistic Regression: highest recall (~0.72 after SMOTE).  
-   - XGBoost: best precision but lower recall.  
-   - SVM: balanced ROC-AUC performance.  
-   - **Top Candidates**: Logistic Regression, XGBoost, SVM.  
-
-7. **Hyperparameter Tuning**  
-   - Performed tuning on the top 3 models.  
-   - Optimized mainly for **recall**.  
+6. **Evaluation**  
+   - Due to strong imbalance, **ROC-AUC** and **Recall** were more informative than Accuracy.  
+   - Models tuned with class weights and resampling.
 
 ---
 
-## Results
+## Key Findings
 
-| Model                 | Precision | Recall | F1   | ROC-AUC |
-|------------------------|-----------|--------|------|---------|
-| Logistic Regression    | 0.05      | 0.72   | 0.10 | 0.81    |
-| XGBoost                | 0.07      | 0.36   | 0.12 | 0.80    |
-| Support Vector Machine | 0.06      | 0.67   | 0.10 | 0.78    |
-| Random Forest          | 0.06      | 0.12   | 0.08 | 0.71    |
-| K-Nearest Neighbors    | 0.04      | 0.29   | 0.07 | 0.64    |
-
-**Final Model Chosen:** Logistic Regression (highest recall, stable ROC-AUC).  
+- Models demonstrate **good ranking ability** with **ROC-AUC ≈ 0.82–0.83** (for example, Logistic Regression ROC-AUC ≈ **0.8287** in the notebook).  
+- **Test-set accuracy** is around **76.9%**, but **precision is very low (~4.9%)** while **recall is relatively high (~76.3%)**, producing a **low F1 score (~9.1%)**.  
+  → The model captures most true claims (high recall) but produces many false positives (very low precision).  
+- **Resampling methods (ROS, SMOTE)** produced **very similar test-set metrics**.  
+- **Class-weight balancing** slightly increased recall but did not meaningfully improve precision or F1.  
+- **Model comparison:** Logistic Regression showed the highest ROC-AUC (~0.829); XGBoost’s ROC-AUC was lower in this run (~0.778).  
+- **Business implication:** The current model is useful as a *high-sensitivity* flagging tool (to surface likely claims for human review), but it needs further refinement (threshold tuning, feature engineering, cost-sensitive optimization) to reduce false positives before automated decisions.
 
 ---
+
+## Next Steps
+
+- Apply **threshold tuning** to find better precision/recall trade-offs.  
+- Explore **cost-sensitive learning** (assign higher penalty to false negatives).  
+- Conduct **feature engineering** on travel and customer variables.  
+- Deploy model as a **dashboard or API** for business use.
+
+---
+
+## Repository Structure
+
